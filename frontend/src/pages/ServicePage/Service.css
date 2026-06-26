@@ -1,0 +1,446 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+.service__wrapper {
+  --navy: #210062;
+  --navy-deep: #160048;
+  --navy-soft: #4b3380;
+  --coral: #f0a04b;
+  --coral-deep: #d9842a;
+  --coral-tint: rgba(240, 160, 75, 0.14);
+  --cream: #fbf7f0;
+  --ink: #241b3a;
+  --white: #ffffff;
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+  --shadow-card: 0 10px 30px rgba(33, 0, 98, 0.1);
+  --shadow-pop: 0 16px 40px rgba(33, 0, 98, 0.22);
+
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--cream);
+  width: 100%;
+  box-sizing: border-box;
+  padding: 72px 24px 96px;
+  overflow-x: hidden;
+}
+
+.service__wrapper * {
+  box-sizing: border-box;
+}
+
+.service__wrapper button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.service__wrapper :focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
+
+/* ---------- Shared section heading ---------- */
+.service__intro,
+.service__method {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.service__eyebrow {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--coral-deep);
+  background: var(--coral-tint);
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin: 0 0 16px;
+}
+
+.service__heading {
+  font-family: 'Merriweather', serif;
+  font-weight: 700;
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  line-height: 1.3;
+  color: var(--navy-deep);
+  margin: 0 0 14px;
+}
+
+.service__subhead {
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--navy-soft);
+  margin: 0;
+}
+
+/* ---------- Service cards ---------- */
+.service__grid {
+  max-width: 1180px;
+  margin: 56px auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.service__card {
+  position: relative;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 36px 28px 28px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.service__card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--coral), var(--navy));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.service__card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-pop);
+}
+
+.service__card:hover::before {
+  transform: scaleX(1);
+}
+
+/* Numbered hangtag — echoes the price tag on the Store cards */
+.service__tag {
+  position: absolute;
+  top: 16px;
+  right: -6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--coral);
+  color: var(--navy-deep);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 5px 12px 5px 16px;
+  clip-path: polygon(14% 0%, 100% 0%, 100% 100%, 14% 100%, 0% 50%);
+  transform: rotate(-4deg);
+  box-shadow: 0 4px 10px rgba(33, 0, 98, 0.2);
+}
+
+.service__tagHole {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--white);
+  flex-shrink: 0;
+}
+
+.service__iconWrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--coral-tint);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.service__icon {
+  width: 26px;
+  height: 26px;
+  color: var(--coral-deep);
+}
+
+.service__cardTitle {
+  font-family: 'Merriweather', serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--navy-deep);
+  margin: 0 0 10px;
+}
+
+.service__cardDesc {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--navy-soft);
+  margin: 0 0 18px;
+}
+
+.service__features {
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.service__features li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.service__features li::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--coral);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.service__card .service__cta {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* ---------- How We Work ---------- */
+.service__method {
+  margin-top: 120px;
+}
+
+.service__steps {
+  position: relative;
+  max-width: 1000px;
+  margin: 56px auto 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.service__stepsLine {
+  position: absolute;
+  top: 22px;
+  left: 12%;
+  right: 12%;
+  height: 0;
+  border-top: 2px dashed rgba(33, 0, 98, 0.18);
+  z-index: 0;
+}
+
+.service__step {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.service__stepNumber {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--coral);
+  color: var(--navy-deep);
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  box-shadow: 0 6px 16px rgba(240, 160, 75, 0.4);
+}
+
+.service__stepTitle {
+  font-family: 'Merriweather', serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--navy-deep);
+  margin: 0 0 6px;
+}
+
+.service__stepDesc {
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--navy-soft);
+  margin: 0;
+  max-width: 190px;
+}
+
+/* ---------- CTA panel ---------- */
+.service__ctaPanel {
+  position: relative;
+  max-width: 1180px;
+  margin: 120px auto 0;
+  background: linear-gradient(135deg, var(--navy-deep), var(--navy));
+  border-radius: var(--radius-lg);
+  padding: 64px 40px;
+  text-align: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.service__ctaDots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.4) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.18;
+  z-index: 0;
+}
+
+.service__ctaGlow {
+  position: absolute;
+  top: -110px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 360px;
+  height: 360px;
+  background: var(--coral);
+  filter: blur(90px);
+  opacity: 0.4;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.service__ctaRing {
+  position: absolute;
+  bottom: -40px;
+  right: 12%;
+  width: 120px;
+  height: 120px;
+  border: 2px dashed rgba(240, 160, 75, 0.45);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.service__ctaContent {
+  position: relative;
+  z-index: 1;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.service__ctaTitle {
+  font-family: 'Merriweather', serif;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  color: var(--white);
+  margin: 0 0 14px;
+}
+
+.service__ctaSub {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0 0 28px;
+}
+
+.service__ctaActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
+/* ---------- Buttons ---------- */
+.service__cta {
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 12px 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.service__cta:active {
+  transform: scale(0.97);
+}
+
+.service__cta--primary {
+  background: var(--coral);
+  color: var(--navy-deep);
+}
+
+.service__cta--primary:hover {
+  background: var(--coral-deep);
+}
+
+.service__cta--ghost {
+  background: transparent;
+  color: var(--white);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+}
+
+.service__cta--ghost:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 980px) {
+  .service__grid {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+  }
+
+  .service__steps {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 24px;
+  }
+
+  .service__stepsLine {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .service__wrapper {
+    padding: 56px 18px 72px;
+  }
+
+  .service__method {
+    margin-top: 88px;
+  }
+
+  .service__ctaPanel {
+    margin-top: 88px;
+    padding: 48px 24px;
+  }
+
+  .service__steps {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .service__ctaActions {
+    width: 100%;
+  }
+
+  .service__ctaActions .service__cta {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service__card,
+  .service__card::before,
+  .service__cta {
+    transition: none;
+  }
+
+  .service__card:hover {
+    transform: none;
+  }
+}

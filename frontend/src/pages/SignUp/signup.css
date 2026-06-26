@@ -1,0 +1,362 @@
+/* ==========================================
+   Sign Up Page — Benkreations
+   Brand gradient:
+     #140141 → rgba(176,15,144,0.4)
+   Orange: #E87722
+   ========================================== */
+
+:root {
+  --brand-gradient: linear-gradient(
+    135deg,
+    #140141 0%,
+    #140141 38%,
+    rgba(20, 1, 65, 0.93) 38%,
+    rgba(50, 5, 85, 0.85) 50%,
+    rgba(110, 11, 110, 0.7) 65%,
+    rgba(176, 15, 144, 0.55) 80%,
+    rgba(176, 15, 144, 0.4) 100%
+  );
+  --orange: #E87722;
+  --purple-dark: #140141;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+.signup-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* ==========================================
+   LEFT PANEL — brand gradient
+   ========================================== */
+.signup-left {
+  background: var(--brand-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative circles */
+.signup-left::before,
+.signup-left::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+}
+
+.signup-left::before {
+  width: 420px;
+  height: 420px;
+  top: -100px;
+  right: -120px;
+}
+
+.signup-left::after {
+  width: 280px;
+  height: 280px;
+  bottom: -60px;
+  left: -80px;
+}
+
+.brand-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+}
+
+.brand-logo {
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.brand-title {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.brand-tagline {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  max-width: 300px;
+}
+
+.brand-dots {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transition: background 0.2s;
+}
+
+.dot.active {
+  background: #fff;
+  width: 24px;
+  border-radius: 4px;
+}
+
+/* ==========================================
+   RIGHT PANEL — form
+   ========================================== */
+.signup-right {
+  background: #f5f4f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 32px;
+}
+
+.form-card {
+  background: #fff;
+  border-radius: 22px;
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 4px 32px rgba(20, 1, 65, 0.08);
+}
+
+.form-top {
+  margin-bottom: 28px;
+}
+
+.form-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--purple-dark);
+  margin-bottom: 6px;
+}
+
+.form-subtitle {
+  font-size: 0.88rem;
+  color: #999;
+}
+
+/* ---- Form fields ---- */
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.field-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--purple-dark);
+  letter-spacing: 0.02em;
+}
+
+.field-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.field-icon {
+  position: absolute;
+  left: 14px;
+  color: #bbb;
+  font-size: 1rem;
+  pointer-events: none;
+  transition: color 0.2s;
+}
+
+.field-input {
+  width: 100%;
+  height: 48px;
+  padding: 0 44px 0 42px;
+  border: 1.5px solid #e5e0f0;
+  border-radius: 11px;
+  font-size: 0.9rem;
+  color: #222;
+  background: #fafafa;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.field-input::placeholder { color: #ccc; }
+
+.field-input:focus {
+  border-color: var(--purple-dark);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(20, 1, 65, 0.07);
+}
+
+.field-wrap:focus-within .field-icon {
+  color: var(--purple-dark);
+}
+
+/* Password toggle */
+.toggle-password {
+  position: absolute;
+  right: 14px;
+  background: none;
+  border: none;
+  color: #bbb;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.toggle-password:hover { color: var(--purple-dark); }
+
+/* Password strength */
+.strength-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.strength-fill {
+  height: 4px;
+  border-radius: 4px;
+  flex: 1;
+  transition: width 0.3s, background 0.3s;
+}
+
+.strength-fill.weak   { background: #e24b4a; width: 30%; }
+.strength-fill.medium { background: #E87722; width: 65%; }
+.strength-fill.strong { background: #3b6d11; width: 100%; }
+
+.strength-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #aaa;
+  white-space: nowrap;
+}
+
+/* ---- Submit button — brand gradient ---- */
+.submit-btn {
+  width: 100%;
+  height: 50px;
+  background: var(--brand-gradient);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: opacity 0.2s, transform 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.submit-btn:hover   { opacity: 0.9; transform: translateY(-1px); }
+.submit-btn:active  { transform: translateY(0); }
+.submit-btn.loading { opacity: 0.75; cursor: not-allowed; }
+
+/* Spinner */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid rgba(255,255,255,0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---- Divider ---- */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 0 16px;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: #ede8f8;
+}
+
+.divider-text {
+  font-size: 0.78rem;
+  color: #bbb;
+  font-weight: 600;
+}
+
+/* ---- Login prompt ---- */
+.login-prompt {
+  text-align: center;
+  font-size: 0.88rem;
+  color: #888;
+}
+
+.login-link {
+  color: var(--orange);
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.login-link:hover { color: var(--purple-dark); }
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+@media (max-width: 768px) {
+  .signup-page {
+    grid-template-columns: 1fr;
+  }
+
+  .signup-left {
+    padding: 40px 24px;
+    min-height: 240px;
+  }
+
+  .brand-title   { font-size: 1.6rem; }
+  .brand-tagline { font-size: 0.85rem; }
+
+  .signup-right {
+    padding: 32px 20px;
+  }
+
+  .form-card {
+    padding: 28px 22px;
+  }
+}
+
+@media (max-width: 400px) {
+  .form-card { border-radius: 16px; }
+  .form-title { font-size: 1.3rem; }
+}

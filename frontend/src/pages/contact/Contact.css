@@ -1,0 +1,399 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+.contact__wrapper {
+  --navy: #210062;
+  --navy-deep: #160048;
+  --navy-soft: #4b3380;
+  --coral: #f0a04b;
+  --coral-deep: #d9842a;
+  --coral-tint: rgba(240, 160, 75, 0.16);
+  --navy-tint: rgba(33, 0, 98, 0.06);
+  --cream: #fbf7f0;
+  --ink: #241b3a;
+  --white: #ffffff;
+  --success: #1e8a5a;
+  --error: #c23b22;
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+  --shadow-card: 0 10px 30px rgba(33, 0, 98, 0.1);
+
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--cream);
+  width: 100%;
+  box-sizing: border-box;
+  padding: 72px 24px 96px;
+}
+
+.contact__wrapper * {
+  box-sizing: border-box;
+}
+
+.contact__wrapper button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.contact__wrapper :focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
+
+.contact__icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* ---------- Get in touch layout ---------- */
+.contact__getInTouch {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.contact__heading {
+  font-family: 'Merriweather', serif;
+  font-weight: 700;
+  font-size: 1.9rem;
+  color: var(--navy-deep);
+  margin: 0 0 10px;
+}
+
+.contact__introText {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--navy-soft);
+  margin: 0 0 26px;
+}
+
+/* ---------- Info cards ---------- */
+.contact__infoList {
+  list-style: none;
+  margin: 0 0 30px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.contact__infoCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--white);
+  border: 1px solid var(--navy-tint);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.contact__infoCard:hover {
+  border-color: var(--coral);
+  transform: translateY(-2px);
+}
+
+.contact__infoIconWrap {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  background: var(--coral-tint);
+  color: var(--coral-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.contact__infoText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.contact__infoLabel {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--navy-soft);
+}
+
+.contact__infoValue {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--navy-deep);
+}
+
+/* ---------- Social links ---------- */
+.contact__followHeading {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--navy-deep);
+  margin: 0 0 12px;
+}
+
+.contact__socialList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.contact__socialLink {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--navy-deep);
+  background: var(--navy-tint);
+  padding: 8px 16px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.contact__socialLink:hover {
+  background: var(--coral);
+  color: var(--navy-deep);
+}
+
+/* ---------- Form ---------- */
+.contact__form {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact__formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.contact__formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contact__fieldLabel {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--navy-deep);
+}
+
+.contact__textInput,
+.contact__messageInput {
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--ink);
+  border: 1px solid var(--navy-tint);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  background: var(--white);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.contact__textInput::placeholder,
+.contact__messageInput::placeholder {
+  color: rgba(36, 27, 58, 0.45);
+}
+
+.contact__textInput:focus,
+.contact__messageInput:focus {
+  outline: none;
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px var(--coral-tint);
+}
+
+.contact__messageInput {
+  resize: vertical;
+  min-height: 130px;
+}
+
+.contact__submitButton {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--coral);
+  color: var(--navy-deep);
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 13px 26px;
+  border-radius: 999px;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.contact__submitButton:hover:not(:disabled) {
+  background: var(--coral-deep);
+}
+
+.contact__submitButton:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.contact__submitButton:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.contact__formStatus {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: -6px 0 0;
+}
+
+.contact__formStatus--success {
+  color: var(--success);
+}
+
+.contact__formStatus--error {
+  color: var(--error);
+}
+
+/* ---------- FAQ ---------- */
+.contact__faqSection {
+  max-width: 680px;
+  margin: 120px auto 0;
+  text-align: center;
+}
+
+.contact__faqEyebrow {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--coral-deep);
+  background: var(--coral-tint);
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin: 0 0 16px;
+}
+
+.contact__faqHeading {
+  font-family: 'Merriweather', serif;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  color: var(--navy-deep);
+  margin: 0 0 10px;
+}
+
+.contact__faqSubtext {
+  font-size: 0.92rem;
+  color: var(--navy-soft);
+  margin: 0 0 36px;
+}
+
+.contact__faqList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+.contact__faqItem {
+  background: var(--white);
+  border: 1px solid var(--navy-tint);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color 0.15s ease;
+}
+
+.contact__faqItem.is-open {
+  border-color: var(--coral);
+}
+
+.contact__faqQuestionButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  text-align: left;
+}
+
+.contact__faqQuestionText {
+  font-size: 0.94rem;
+  font-weight: 600;
+  color: var(--navy-deep);
+}
+
+.contact__faqToggleIcon {
+  color: var(--coral-deep);
+  flex-shrink: 0;
+  display: flex;
+  transition: transform 0.2s ease;
+}
+
+.contact__faqItem.is-open .contact__faqToggleIcon {
+  transform: rotate(180deg);
+}
+
+.contact__faqAnswerText {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--navy-soft);
+  margin: 0;
+  padding: 0 20px 20px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 920px) {
+  .contact__getInTouch {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .contact__wrapper {
+    padding: 56px 18px 72px;
+  }
+
+  .contact__form {
+    padding: 24px;
+  }
+
+  .contact__formRow {
+    grid-template-columns: 1fr;
+  }
+
+  .contact__faqSection {
+    margin-top: 88px;
+  }
+
+  .contact__faqQuestionText {
+    font-size: 0.88rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact__infoCard,
+  .contact__socialLink,
+  .contact__textInput,
+  .contact__messageInput,
+  .contact__submitButton,
+  .contact__faqToggleIcon {
+    transition: none;
+  }
+
+  .contact__infoCard:hover {
+    transform: none;
+  }
+}

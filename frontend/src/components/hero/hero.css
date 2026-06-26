@@ -1,0 +1,238 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 640px;
+  display: flex;
+  align-items: center;
+  background-color: #140141;
+  background-image: var(--hero-banner);
+  background-size: cover;
+  background-position: center;
+}
+
+/* Solid color wash from left to right: opaque enough over the text side
+   to guarantee readability, easing toward the banner image on the right. */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(100deg,
+    #140141 0%,
+    #140141 38%,
+    rgba(20, 1, 65, 0.93) 38%,
+    rgba(50, 5, 85, 0.85) 50%,
+    rgba(110, 11, 110, 0.7) 65%,
+    rgba(176, 15, 144, 0.55) 80%,
+    rgba(176, 15, 144, 0.4) 100%
+  );
+}
+
+/* Soft ambient blobs to echo the reference design and further dissolve
+   any remaining hard edge from the photo */
+.hero-blob {
+  position: absolute;
+  z-index: 1;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+.hero-blob-a {
+  width: 520px;
+  height: 520px;
+  right: -120px;
+  top: -160px;
+  background: radial-gradient(circle, rgba(176, 15, 144, 0.32), transparent 100%);
+}
+
+.hero-blob-b {
+  width: 460px;
+  height: 460px;
+  left: -140px;
+  bottom: -180px;
+  background: radial-gradient(circle, rgba(20, 1, 65, 0.55), transparent 70%);
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 96px 24px;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: 56px;
+}
+
+/* Copy */
+.hero-copy h1 {
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.1rem, 4vw, 3.25rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  margin: 0 0 22px;
+}
+
+.hero-accent {
+  color: #e94fc4;
+}
+
+.hero-copy p {
+  font-family: "Inter", "Segoe UI", sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 540px;
+  margin: 0 0 36px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 16px 30px;
+  border-radius: 6px;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn-primary {
+  background: #b00f90;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #930c79;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(176, 15, 144, 0.4);
+}
+
+.btn-secondary {
+  background: #ffffff;
+  color: #140141;
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(255, 255, 255, 0.18);
+}
+
+/* Stat cards */
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.stat-card {
+  grid-column: span 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.stat-card:first-child {
+  grid-column: span 2;
+}
+
+.stat-icon {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #b00f90, #140141);
+  color: #fff;
+}
+
+.stat-value {
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: #fff;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 2px 0 0;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1024px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    padding: 80px 24px;
+    gap: 48px;
+  }
+
+  .hero-stats {
+    max-width: 480px;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero {
+    min-height: 0;
+  }
+
+  .hero-inner {
+    padding: 64px 18px;
+  }
+
+  .hero-copy p {
+    font-size: 1rem;
+  }
+
+  .hero-actions {
+    width: 100%;
+  }
+
+  .btn {
+    flex: 1 1 auto;
+  }
+
+  .hero-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card:first-child {
+    grid-column: span 1;
+  }
+
+  .hero-blob-a,
+  .hero-blob-b {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+}

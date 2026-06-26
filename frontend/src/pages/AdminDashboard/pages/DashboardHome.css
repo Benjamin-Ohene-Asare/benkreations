@@ -1,0 +1,177 @@
+.dashboard-home {
+  width: 100%;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-bottom: 28px;
+}
+
+.stat-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  padding: 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.stat-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.stat-icon svg {
+  font-size: 27px;
+}
+
+.stat-icon.revenue {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.stat-icon.orders {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.stat-icon.products {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.stat-icon.customers {
+  background: #ede9fe;
+  color: #7c3aed;
+}
+
+.stat-icon.downloads {
+  background: #cffafe;
+  color: #0891b2;
+}
+
+.stat-icon.selling {
+  background: #ffe4e6;
+  color: #e11d48;
+}
+
+.stat-card p {
+  margin: 0 0 6px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.stat-card h3 {
+  margin: 0;
+  font-size: 24px;
+  color: #111827;
+}
+
+.dashboard-panels {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 24px;
+}
+
+.dashboard-section {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 22px;
+  padding: 24px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  gap: 16px;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #111827;
+}
+
+.section-header button {
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  padding: 10px 15px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.empty-state {
+  border: 1px dashed #d1d5db;
+  border-radius: 18px;
+  padding: 40px 24px;
+  text-align: center;
+  background: #f9fafb;
+}
+
+.empty-state h3 {
+  margin: 0 0 8px;
+  color: #111827;
+}
+
+.empty-state p {
+  margin: 0;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-wrap th,
+.table-wrap td {
+  padding: 14px 10px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+.table-wrap th {
+  color: #6b7280;
+  font-weight: 600;
+}
+
+@media (max-width: 1100px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-panels {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 650px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-section {
+    padding: 18px;
+  }
+
+  .empty-state {
+    padding: 30px 18px;
+  }
+}

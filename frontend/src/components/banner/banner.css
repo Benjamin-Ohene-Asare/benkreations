@@ -1,0 +1,111 @@
+.banner {
+  width: 100%;
+  min-height: 420px;
+  position: relative;
+  background: linear-gradient(to right, #1a0a2e 0%, #3d1a4f 40%, #c06080 70%, #e8a0b0 100%);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.banner__img {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 60%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.banner__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right,
+    #140141 0%,
+    #140141 38%,
+    rgba(20, 1, 65, 0.93) 38%,
+    rgba(50, 5, 85, 0.85) 50%,
+    rgba(110, 11, 110, 0.7) 65%,
+    rgba(176, 15, 144, 0.55) 80%,
+    rgba(176, 15, 144, 0.4) 100%
+  );
+}
+
+.banner__content {
+  position: relative;
+  z-index: 2;
+  padding: 60px 10%;
+ 
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.banner__title {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: #fff;
+}
+
+.banner__title span {
+  color: #f97316;
+}
+
+.banner__subtitle {
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
+  color: #ccc;
+  line-height: 1.6;
+  max-width: 420px;
+}
+
+.banner__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #f97316;
+  color: #fff;
+  border: none;
+  padding: 14px 28px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 6px;
+  cursor: pointer;
+  width: fit-content;
+  transition: background 0.2s;
+  text-decoration: none;
+}
+
+.banner__btn:hover {
+  background: #ea6c0b;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .banner {
+    min-height: 320px;
+    background: linear-gradient(to bottom, #1a0a2e 0%, #3d1a4f 50%, #c06080 100%);
+  }
+
+  .banner__img {
+    width: 100%;
+    height: 100%;
+    opacity: 0.25;
+  }
+
+  .banner__overlay {
+    background: linear-gradient(to bottom, #1a0a2ecc 0%, #1a0a2e88 100%);
+  }
+
+  .banner__content {
+    padding: 40px 6%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .banner { min-height: 280px; }
+  .banner__content { gap: 14px; padding: 32px 5%; }
+  .banner__btn { padding: 12px 22px; font-size: 0.88rem; }
+}

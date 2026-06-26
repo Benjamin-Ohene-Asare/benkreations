@@ -1,0 +1,159 @@
+.detail-page {
+  display: flex;
+  gap: 40px;
+  padding: 5% 10%;
+  align-items: center;
+  justify-content: center;
+}
+
+/* LEFT */
+.detail-img {
+  width: 45%;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.detail-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* RIGHT */
+.detail-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detail-info__badge {
+  display: inline-block;
+  background: #f1f1f1;
+  color: #555;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  width: fit-content;
+}
+
+.detail-info h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111;
+
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.detail-info__rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.detail-info__stars {
+  color: #f59e0b;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+}
+
+.detail-info__rating-text {
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.detail-info__desc {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 20px;
+}
+
+.detail-info__included h3 {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+.detail-info__included-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.detail-info__included-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.detail-info__included-list li::before {
+  content: '✓';
+  color: #f59e0b;
+  font-weight: 700;
+}
+
+.detail-info__price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.detail-info__price-amount {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111;
+}
+
+.detail-info__price-label {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.detail-info__btn {
+  background: #f97316;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 16px 24px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.2s;
+}
+
+.detail-info__btn:hover {
+  background: #ea6c0b;
+}
+
+.detail-info__secure {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #999;
+}
+
+@media (max-width: 768px) {
+  .detail-page {
+    flex-direction: column;
+    padding: 5% 5%;
+  }
+
+  .detail-img {
+    width: 100%;
+  }
+
+  .detail-info {
+    width: 100%;
+  }
+}

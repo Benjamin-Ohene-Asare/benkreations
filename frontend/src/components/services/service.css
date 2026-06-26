@@ -1,0 +1,52 @@
+*{
+     font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+.services{
+    padding: 4% 10%;
+}
+.heading{
+
+     text-align: center;
+  max-width: 620px;
+  margin: 0 auto 52px;
+  
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+
+}
+.service-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 20px;
+  border: 1px solid #eeeeee;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.learn-more{
+  margin-top: 15px;
+}
+.learn-more button{
+  background-color: #ff6a1a;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .service-grid {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+  }
+}

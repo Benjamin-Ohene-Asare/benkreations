@@ -1,0 +1,523 @@
+/* ==========================================
+   Cart Page — Benkreations
+   Brand: #140141 (deep purple) → #B00F90 (magenta)
+   ========================================== */
+
+.cart-page {
+  min-height: 100vh;
+  background: #f8f7fc;
+  padding-bottom: 60px;
+}
+
+/* ---- Header ---- */
+.cart-header {
+  background: linear-gradient(
+    135deg,
+    #140141 0%,
+    #140141 38%,
+    rgba(20, 1, 65, 0.93) 38%,
+    rgba(50, 5, 85, 0.85) 50%,
+    rgba(110, 11, 110, 0.7) 65%,
+    rgba(176, 15, 144, 0.55) 80%,
+    rgba(176, 15, 144, 0.4) 100%
+  );
+  padding: 48px 8%;
+  text-align: center;
+}
+
+.cart-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.cart-breadcrumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.breadcrumb-sep { opacity: 0.5; }
+
+.breadcrumb-active {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ---- Body layout ---- */
+.cart-body {
+  max-width: 1100px;
+  margin: 40px auto 0;
+  padding: 0 5%;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 28px;
+  align-items: start;
+}
+
+/* ---- Left column ---- */
+.cart-left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cart-table-wrap {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 20px rgba(20, 1, 65, 0.07);
+  overflow: hidden;
+}
+
+/* ---- Table head row ---- */
+.table-head {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.2fr 1fr;
+  background: linear-gradient(90deg, #140141, #5c0a7a);
+  padding: 14px 20px;
+}
+
+.table-head span {
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.table-head .col-sub {
+  text-align: right;
+}
+
+/* ---- Cart row ---- */
+.cart-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.2fr 1fr;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0edf8;
+  transition: background 0.15s;
+}
+
+.cart-row:last-child { border-bottom: none; }
+.cart-row:hover { background: #faf9fd; }
+
+/* Product cell */
+.product-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.remove-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: none;
+  background: #ffe5e5;
+  color: #c0392b;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.remove-btn:hover {
+  background: #c0392b;
+  color: #fff;
+}
+
+.product-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  background: #f4f0fb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.product-name {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #140141;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-weight {
+  font-size: 0.76rem;
+  color: #999;
+}
+
+/* Price */
+.price-cell {
+  font-weight: 600;
+  color: #444;
+  font-size: 0.9rem;
+}
+
+/* Subtotal */
+.subtotal-cell {
+  font-weight: 700;
+  color: #140141;
+  font-size: 0.92rem;
+  text-align: right;
+}
+
+/* Qty stepper */
+.qty-control {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #e5dff5;
+  border-radius: 8px;
+  overflow: hidden;
+  width: fit-content;
+}
+
+.qty-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: #f5f0ff;
+  color: #140141;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qty-btn:hover {
+  background: #140141;
+  color: #fff;
+}
+
+.qty-value {
+  width: 32px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #140141;
+}
+
+/* Mobile label — hidden on desktop */
+.mobile-label {
+  display: none;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #999;
+  margin-bottom: 4px;
+}
+
+/* Empty state */
+.cart-empty {
+  padding: 60px 20px;
+  text-align: center;
+  color: #aaa;
+}
+
+.cart-empty-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+/* ---- Cart actions ---- */
+.cart-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.coupon-wrap {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.coupon-input {
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 0.88rem;
+  outline: none;
+  width: 180px;
+  transition: border-color 0.2s;
+}
+
+.coupon-input:focus {
+  border-color: #B00F90;
+}
+
+.apply-coupon-btn {
+  background: linear-gradient(135deg, #140141, #B00F90);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+
+.apply-coupon-btn:hover { opacity: 0.88; }
+
+.clear-cart-btn {
+  background: none;
+  border: none;
+  color: #B00F90;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.clear-cart-btn:hover { color: #140141; }
+
+/* ---- Order Summary ---- */
+.order-summary {
+  background: #fff;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 2px 20px rgba(20, 1, 65, 0.07);
+  position: sticky;
+  top: 100px;
+}
+
+.summary-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #140141;
+  margin-bottom: 20px;
+}
+
+.summary-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.summary-row span:last-child {
+  font-weight: 600;
+  color: #222;
+}
+
+.discount-row span { color: #27ae60 !important; }
+
+.summary-divider {
+  height: 1px;
+  background: #f0edf8;
+  margin: 16px 0;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #140141;
+  margin-bottom: 20px;
+}
+
+.checkout-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #140141, #B00F90);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.checkout-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.checkout-btn:active { transform: translateY(0); }
+
+/* ==========================================
+   RESPONSIVE — tablet
+   ========================================== */
+@media (max-width: 860px) {
+  .cart-body {
+    grid-template-columns: 1fr;
+  }
+
+  .order-summary {
+    position: static;
+  }
+}
+
+/* ==========================================
+   RESPONSIVE — mobile: flip rows to cards
+   ========================================== */
+@media (max-width: 600px) {
+  .cart-header { padding: 36px 6%; }
+  .cart-title { font-size: 1.7rem; }
+
+  .cart-body {
+    margin-top: 24px;
+    padding: 0 4%;
+  }
+
+  /* Hide desktop header row */
+  .table-head { display: none; }
+
+  /* Each row becomes a mini-card */
+  .cart-row {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 16px;
+    border-bottom: 1px solid #f0edf8;
+    position: relative;
+  }
+
+  /* Remove button floats top-right */
+  .remove-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+  }
+
+  /* Product cell stays a row */
+  .product-cell {
+    padding-right: 36px; /* space for remove btn */
+  }
+
+  /* Price, qty, subtotal become a 3-column mini-row */
+  .col-price,
+  .col-qty,
+  .col-sub {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Wrap price + qty + subtotal in a row */
+  .cart-row .col-price,
+  .cart-row .col-qty,
+  .cart-row .col-sub {
+    flex: 1;
+  }
+
+  /* Reflow price/qty/subtotal into a horizontal row */
+  .cart-row::after {
+    content: '';
+    display: none;
+  }
+
+  /* Group the 3 data cells side by side */
+  .col-price { order: 2; }
+  .col-qty   { order: 3; }
+  .col-sub   { order: 4; }
+
+  /* Use a sub-grid trick: wrap them */
+  .cart-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "product"
+      "data";
+  }
+
+  .col-product { grid-area: product; }
+
+  /* Put price + qty + subtotal in one data row */
+  .col-price,
+  .col-qty,
+  .col-sub {
+    display: inline-flex;
+    flex-direction: column;
+  }
+
+  /* Wrap the 3 in a flex row using a pseudo-container approach */
+  /* We target all 3 siblings after col-product */
+  .cart-row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .col-product {
+    width: 100%;
+    padding-right: 36px;
+  }
+
+  .col-price,
+  .col-qty,
+  .col-sub {
+    flex: 1;
+    min-width: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .subtotal-cell {
+    text-align: left;
+  }
+
+  /* Show the mobile labels */
+  .mobile-label { display: block; }
+
+  /* Coupon stack */
+  .cart-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .coupon-wrap {
+    flex-direction: column;
+  }
+
+  .coupon-input {
+    width: 100%;
+  }
+
+  .apply-coupon-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .clear-cart-btn {
+    text-align: center;
+  }
+}

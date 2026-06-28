@@ -58,12 +58,23 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ProductPreviewImageSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+
     class Meta:
         model = ProductPreviewImage
         fields = ["id", "image", "created_at"]
 
+    def get_image(self, obj):
+        request = self.context.get("request")
+        if obj.image and request:
+            return request.build_absolute_uri(obj.image.url)
+        if obj.image:
+            return obj.image.url
+        return None
 
 class ProductSerializer(serializers.ModelSerializer):
+    preview_images = ProductPreviewImageSerializer(many=True, read_only=True)
+    thumbnail = serializers.SerializerMethodField()
     preview_images = ProductPreviewImageSerializer(many=True, read_only=True)
 
     uploaded_preview_images = serializers.ListField(
@@ -116,6 +127,13 @@ class ProductSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Price is too high.")
 
         return value
+    def get_thumbnail(self, obj):
+        request = self.context.get("request")
+        if obj.thumbnail and request:
+            return request.build_absolute_uri(obj.thumbnail.url)
+        if obj.thumbnail:
+            return obj.thumbnail.url
+        return None
 
     def validate_thumbnail(self, file):
         validate_file_extension(file, ALLOWED_IMAGE_EXTENSIONS, "Thumbnail")
@@ -176,7 +194,7 @@ class CartItemSerializer(serializers.ModelSerializer):
         decimal_places=2,
         read_only=True
     )
-    thumbnail = serializers.ImageField(source="product.thumbnail", read_only=True)
+    thumbnail = serializers.SerializerMethodField()
     category_name = serializers.CharField(source="product.category.name", read_only=True)
 
     class Meta:
@@ -190,6 +208,15 @@ class CartItemSerializer(serializers.ModelSerializer):
             "category_name",
             "added_at",
         ]
+    def get_thumbnail(self, obj):
+        request = self.context.get("request")
+        thumbnail = obj.product.thumbnail
+
+        if thumbnail and request:
+            return request.build_absolute_uri(thumbnail.url)
+        if thumbnail:
+            return thumbnail.url
+        return None
 
 
 class CartSerializer(serializers.ModelSerializer):

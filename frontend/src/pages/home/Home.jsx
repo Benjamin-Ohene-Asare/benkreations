@@ -4,7 +4,7 @@ import Services from "../../components/services/Services";
 import Banner from "../../components/banner/Banner";
 import WebApp from "../../components/webApp/WebApp";
 import  WorkWithUs from "../../components/workWithUs/WorkWithUs";
-import Footer from "../../components/footer/Footer";
+
 const Home = () => {
   return (
     <div>
@@ -16,7 +16,7 @@ const Home = () => {
       {/* <Banner /> */}
    <WorkWithUs />
    <WebApp />
-      <Footer />
+     
     </div>
   );
 };

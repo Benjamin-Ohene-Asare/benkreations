@@ -4,7 +4,6 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 load_dotenv(BASE_DIR / ".env")
 
 SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-development-only-key")
@@ -104,23 +103,29 @@ USE_TZ = True
 AUTH_USER_MODEL = "account.User"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
-
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
 
 AWS_ACCESS_KEY_ID = os.getenv("SUPABASE_ACCESS_KEY")
 AWS_SECRET_ACCESS_KEY = os.getenv("SUPABASE_SECRET_KEY")
 AWS_STORAGE_BUCKET_NAME = os.getenv("SUPABASE_BUCKET_NAME", "product-files")
 AWS_S3_ENDPOINT_URL = os.getenv("SUPABASE_S3_ENDPOINT")
-AWS_S3_REGION_NAME = os.getenv("SUPABASE_REGION", "us-east-1")
+AWS_S3_REGION_NAME = os.getenv("SUPABASE_REGION", "eu-west-1")
 AWS_S3_SIGNATURE_VERSION = "s3v4"
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_ADDRESSING_STYLE = "path"
+
+SUPABASE_PROJECT_REF = os.getenv("SUPABASE_PROJECT_REF")
+
+AWS_S3_CUSTOM_DOMAIN = (
+    f"{SUPABASE_PROJECT_REF}.storage.supabase.co/storage/v1/object/public/{AWS_STORAGE_BUCKET_NAME}"
+)
+
+MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 STORAGES = {
     "default": {
@@ -130,6 +135,9 @@ STORAGES = {
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 524288000
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760
 
 EMAIL_BACKEND = os.getenv(
     "EMAIL_BACKEND",
@@ -151,9 +159,7 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "handlers": {
-        "console": {
-            "class": "logging.StreamHandler",
-        },
+        "console": {"class": "logging.StreamHandler"},
     },
     "root": {
         "handlers": ["console"],

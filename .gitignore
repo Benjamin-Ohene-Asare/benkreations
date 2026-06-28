@@ -13,7 +13,7 @@ __pycache__/
 backend/db.sqlite3
 
 # Uploaded files
-backend/media/
+
 
 # Static build
 backend/staticfiles/

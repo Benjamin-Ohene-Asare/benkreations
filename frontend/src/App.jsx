@@ -11,7 +11,10 @@ import AdminDashboard from "./pages/AdminDashboard/pages/AdminDashboard";
 import SignUp from "./pages/SignUp/SignUp";
 import Login from "./pages/SignUp/Login";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
-
+import PaymentSuccess from "./pages/payment/PaymentSuccess";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
+import ResetPassword from "./pages/ForgotPassword/ResetPassword";
+import Web from "./pages/website/Web";
 const App = () => {
   const location = useLocation();
 
@@ -25,13 +28,27 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/detail" element={<Detail />} />
+   <Route path="/detail/:id" element={<Detail />} />
         <Route path="/psd-store" element={<Store />} />
         <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/web" element={<Web />} />
 
+        <Route
+  path="/reset-password/:uid/:token"
+  element={<ResetPassword />}
+/>
+<Route
+    path="/forgot-password"
+    element={<ForgotPassword />}
+/>
+
+<Route
+    path="/reset-password/:uid/:token"
+    element={<ResetPassword />}
+/>
         <Route
           path="/cart"
           element={
@@ -41,6 +58,14 @@ const App = () => {
           }
         />
 
+  <Route
+    path="/payment/success"
+    element={
+      <ProtectedRoute>
+        <PaymentSuccess />
+      </ProtectedRoute>
+    }
+  />
         <Route
           path="/user-dashboard"
           element={
@@ -59,6 +84,7 @@ const App = () => {
           }
         />
       </Routes>
+      
     </>
   );
 };

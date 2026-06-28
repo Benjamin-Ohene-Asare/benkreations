@@ -156,12 +156,9 @@ const Login = () => {
                                     Password
                                 </label>
 
-                                <Link
-                                    to="/forgot-password"
-                                    className="forgot-link"
-                                >
-                                    Forgot password?
-                                </Link>
+                               <Link to="/forgot-password">
+    Forgot password?
+</Link>
                             </div>
 
                             <div className="field-wrap">

@@ -397,4 +397,153 @@
 
 @media (max-width: 400px) {
   .stats-top { grid-template-columns: 1fr; }
+}.library-row,
+.order-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.library-row:last-child,
+.order-row:last-child {
+  border-bottom: none;
+}
+
+.library-row img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.library-row div,
+.order-row div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.library-row span,
+.order-row span {
+  font-size: 13px;
+  color: #8a8a8a;
+}
+
+.order-row strong,
+.library-row strong {
+  color: #120044;
+}
+
+.settings-panel {
+  background: #fff;
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 18px 45px rgba(18, 0, 68, 0.06);
+}
+
+.settings-tabs {
+  display: flex;
+  gap: 14px;
+  margin: 24px 0;
+  flex-wrap: wrap;
+}
+
+.settings-tabs button {
+  border: none;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  background: #f2eef8;
+  color: #120044;
+}
+
+.settings-tabs button.active {
+  background: linear-gradient(135deg, #18004d, #d46cc8);
+  color: #fff;
+}
+
+.settings-form {
+  display: grid;
+  gap: 12px;
+  max-width: 520px;
+}
+
+.settings-form label {
+  font-weight: 800;
+  color: #120044;
+}
+
+.settings-form input {
+  width: 100%;
+  border: 1px solid #ddd7e8;
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-size: 15px;
+  outline: none;
+}
+
+.settings-save-btn {
+  margin-top: 12px;
+  border: none;
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-weight: 900;
+  color: #fff;
+  background: linear-gradient(135deg, #18004d, #ef7f1a);
+  cursor: pointer;
+}
+
+.library-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    padding:16px 0;
+    border-bottom:1px solid #eee;
+}
+
+.library-info{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+}
+
+.library-actions{
+    display:flex;
+    gap:10px;
+}
+
+.download-btn{
+    background:#140141;
+    color:#fff;
+    padding:10px 16px;
+    border-radius:8px;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:600;
+    transition:.2s;
+}
+
+.download-btn:hover{
+    background:#2a0270;
+}
+
+@media(max-width:700px){
+    .library-row{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .library-actions{
+        width:100%;
+    }
+
+    .download-btn{
+        flex:1;
+        text-align:center;
+    }
 }

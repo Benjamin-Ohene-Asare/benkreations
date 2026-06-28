@@ -53,3 +53,6 @@ export const deleteProduct = (productId) => {
 export const getFeaturedProducts = () => {
   return axios.get(`${API_BASE_URL}/api/store/products/?featured=true`);
 };
+export const getProduct = (productId) => {
+  return axios.get(`${API_BASE_URL}/api/store/products/${productId}/`);
+};

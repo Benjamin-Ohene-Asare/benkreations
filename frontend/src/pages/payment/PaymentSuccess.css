@@ -1,0 +1,164 @@
+.ps-wrap {
+  padding: 60px 20px 80px;
+  max-width: 640px;
+  margin: 0 auto;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.ps-hero {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.ps-icon-ring {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #ecfdf5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.ps-icon-ring-failed {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #fef2f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.ps-icon-success {
+  font-size: 32px;
+  color: #16a34a;
+}
+
+.ps-icon-failed {
+  font-size: 32px;
+  color: #dc2626;
+}
+
+.ps-h1 {
+  font-size: 26px;
+  font-weight: 500;
+  color: #111;
+  margin-bottom: 8px;
+}
+
+.ps-sub {
+  font-size: 15px;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.ps-meta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  background: #f9fafb;
+  border: 0.5px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.ps-meta-id {
+  font-weight: 500;
+  color: #111;
+}
+
+.ps-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.ps-card {
+  background: #fff;
+  border: 0.5px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+
+.ps-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.ps-thumb {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 0.5px solid #e5e7eb;
+}
+
+.ps-thumb-placeholder {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  background: #f3f4f6;
+  border: 0.5px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.ps-card-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: #111;
+  margin-bottom: 4px;
+}
+
+.ps-card-subtitle {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.ps-divider {
+  border: none;
+  border-top: 0.5px solid #e5e7eb;
+  margin: 16px 0;
+}
+
+.ps-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ps-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  border: 0.5px solid #d1d5db;
+  background: #fff;
+  color: #111;
+  transition: background 0.15s;
+}
+
+.ps-btn:hover {
+  background: #f9fafb;
+}
+
+.ps-verifying {
+  text-align: center;
+  padding: 80px 20px;
+  color: #6b7280;
+  font-size: 15px;
+}

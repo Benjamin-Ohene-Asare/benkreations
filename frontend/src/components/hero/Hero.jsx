@@ -2,6 +2,7 @@ import React from "react";
 import { Code2, Palette, Share2 } from "lucide-react";
 import banner from "../../assets/banner.jpg";
 import "./hero.css";
+import { Link } from "react-router-dom";
 
 const STATS = [
   { icon: Code2, value: "20+", label: "Websites Built" },
@@ -19,11 +20,14 @@ const Hero = () => {
 
       <div className="hero-inner">
         <div className="hero-copy">
-          <h1>
-            Web Development, Design &amp; Social Media,{" "}
-            <span className="hero-accent">All In One Place!</span>
-          </h1>
-          <p>
+       
+<h1>
+  Web Development, Graphic Design & Social Media{" "}
+  <span className="hero-accent">Plus Premium Editable PSD Files.</span>
+</h1>
+
+
+          <p>We build modern websites, create impactful graphic designs, manage social media, and offer professionally designed, fully editable PSD files ready for customization.
             We build fast, modern websites, craft striking graphic design,
             and manage social media that gets your brand noticed and grows
             your audience.
@@ -33,25 +37,13 @@ const Hero = () => {
             <a href="#portfolio" className="btn btn-primary">
               View Portfolio
             </a>
-            <a href="#contact" className="btn btn-secondary">
-              Get In Touch
-            </a>
+            <Link to="/contact" className="btn btn-secondary">
+          Get In Touch
+        </Link>
           </div>
         </div>
 
-        <div className="hero-stats">
-          {STATS.map(({ icon: Icon, value, label }) => (
-            <div className="stat-card" key={label}>
-              <span className="stat-icon">
-                <Icon size={20} strokeWidth={2} />
-              </span>
-              <div>
-                <p className="stat-value">{value}</p>
-                <p className="stat-label">{label}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+      
       </div>
     </section>
   );

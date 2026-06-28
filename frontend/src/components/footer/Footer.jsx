@@ -1,51 +1,59 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './Footer.css'
+import { Link } from "react-router-dom";
 
 const NAV_COLUMNS = [
-  { heading: 'About',    links: ['Our Story', 'Team', 'Contact'] },
-  { heading: 'Discover', links: ['Projects', 'Store', 'News'] },
-  { heading: 'Services', links: ['Development', 'Graphic Design', 'Photography'] },
-  { heading: 'Account',  links: ['Login / Register', 'My Profile', 'My Orders'] },
-  { heading: 'Support',  links: ['FAQs / Help', 'Privacy Policy', 'Terms of Service'] },
-]
-
-const STORE_ITEMS = [
-  { title: 'Bible Study Flyer', category: 'Church Flyers',  price: '$0.01' },
-  { title: 'Charity Flyer',     category: 'NGO Templates',  price: '$0.01' },
-  { title: 'Event Poster',      category: 'Marketing',      price: '$0.01' },
-]
-
-const TRUST_BADGES = [
   {
-    label: 'Secure Payments',
-    sub: 'Trusted checkout',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="1" y="4" width="22" height="16" rx="2" />
-        <line x1="1" y1="10" x2="23" y2="10" />
-      </svg>
-    ),
+    heading: "About",
+    links: [
+      { label: "Our Story", to: "/about" },
+      { label: "Contact", to: "/contact" },
+    ],
   },
   {
-    label: 'Instant Delivery',
-    sub: 'Get it immediately',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-      </svg>
-    ),
+    heading: "Discover",
+    links: [
+      { label: "PSD Store", to: "/psd-store" },
+      { label: "Services", to: "/services" },
+    ],
   },
-]
+  {
+    heading: "Services",
+    links: [
+      { label: "Development", to: "/services" },
+      { label: "Graphic Design", to: "/services" },
+      { label: "Photography", to: "/services" },
+    ],
+  },
+  {
+    heading: "Account",
+    links: [
+      { label: "Login / Register", to: "/login" },
+      { label: "My Profile", to: "/user-dashboard", protected: true },
+      { label: "My Orders", to: "/user-dashboard", protected: true },
+    ],
+  },
+  {
+    heading: "Support",
+    links: [
+      { label: "FAQs / Help", to: "/contact" },
+      { label: "Privacy Policy", to: "/privacy-policy" },
+      { label: "Terms of Service", to: "/terms-of-service" },
+    ],
+  },
+];
 
-const SOCIALS = ['T', 'I', 'L', 'B']
+const SOCIALS = [
+  { label: 'FB', href: 'https://web.facebook.com/gh.kojosweet.5' },
+  { label: 'TK', href: 'https://www.tiktok.com/@techwithbenjamin_' },
+  { label: 'WA', href: 'https://wa.me/233541254645' },
+  { label: 'LI', href: '#' },
+]
 
 const Footer = () => {
-  const [email, setEmail] = useState('')
-
   return (
     <footer className="footer__root">
 
-      {/* ── TOP: brand / store cards / newsletter ── */}
       <div className="footer__top">
 
         {/* Col 1: Brand */}
@@ -67,12 +75,14 @@ const Footer = () => {
           </div>
           <div className="footer__socials">
             {SOCIALS.map((s) => (
-              <a key={s} href="#" className="footer__social-link">{s}</a>
+              <a key={s.label} href={s.href} className="footer__social-link" target="_blank" rel="noopener noreferrer">
+                {s.label}
+              </a>
             ))}
           </div>
         </div>
 
-        {/* Col 2: Nav + store cards stacked */}
+        {/* Col 2: Nav */}
         <div className="footer__center">
           <nav className="footer__nav">
             {NAV_COLUMNS.map((col) => (
@@ -80,55 +90,23 @@ const Footer = () => {
                 <h4 className="footer__nav-heading">{col.heading}</h4>
                 <ul className="footer__nav-list">
                   {col.links.map((link) => (
-                    <li key={link}>
-                      <a href="#" className="footer__nav-link">{link}</a>
+                    <li key={link.label}>
+                      <Link to={link.to} className="footer__nav-link">
+                        {link.label}
+                      </Link>
                     </li>
                   ))}
                 </ul>
               </div>
             ))}
           </nav>
-
-          {/* Store cards sit right below nav */}
-          <div className="footer__store-grid">
-            {STORE_ITEMS.map((item) => (
-              <div key={item.title} className="footer__store-item">
-                <div className="footer__store-thumb" />
-                <div className="footer__store-info">
-                  <span className="footer__store-title">{item.title}</span>
-                  <span className="footer__store-cat">{item.category}</span>
-                  <span className="footer__store-price">{item.price}</span>
-                </div>
-                <span className="footer__store-arrow">↗</span>
-              </div>
-            ))}
-          </div>
         </div>
 
-        {/* Col 3: Newsletter only */}
-        <div className="footer__right">
-          <h4 className="footer__section-heading">Stay Updated</h4>
-          <p className="footer__section-sub">
-            Subscribe for the latest design trends and updates.
-          </p>
-          <div className="footer__email-row">
-            <input
-              className="footer__email-input"
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <button className="footer__email-btn" aria-label="Subscribe">→</button>
-          </div>
-        </div>
       </div>
 
-     
-
-      {/* ── BOTTOM BAR ── */}
+      {/* Bottom bar */}
       <div className="footer__bottom">
-        <span className="footer__copyright">© 2026 Studio. All rights reserved.</span>
+        <span className="footer__copyright">© 2026 Benkreations. All rights reserved.</span>
         <div className="footer__bottom-links">
           <a href="#" className="footer__bottom-link">Privacy</a>
           <a href="#" className="footer__bottom-link">Terms</a>

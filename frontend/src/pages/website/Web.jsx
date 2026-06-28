@@ -1,9 +1,9 @@
 import React from 'react'
-import './webapp.css'
+import './web.css'
 import img1 from '../../assets/VOTEAFRIC.png'
 import img2 from '../../assets/inhim.png'
 import img3 from '../../assets/amazing.png'
-import { Link } from 'react-router-dom'
+
 const projects = [
     {
         id: 1,
@@ -52,16 +52,7 @@ const WebApp = () => {
                 ))}
 
             </div>
-            <div className="more-bitton">
-                <button> 
-
-                      <Link to="/web" className="">
-                  View More
-                </Link>
-                </button>
-
-              
-            </div>
+            
         </section>
     )
 }

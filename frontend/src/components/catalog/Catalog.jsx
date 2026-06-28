@@ -4,8 +4,27 @@ import { getFeaturedProducts } from "../../services/storeApi";
 import "./catalog.css";
 import { useNavigate } from "react-router-dom";
 import { addToCart } from "../../services/cartApi";
-
+import { Link } from "react-router-dom";
 const Catalog = () => {
+  const [toast, setToast] = useState({
+    show: false,
+    message: "",
+    type: "success",
+  });
+  const showToast = (message, type = "success") => {
+    setToast({
+      show: true,
+      message,
+      type,
+    });
+
+    setTimeout(() => {
+      setToast((prev) => ({
+        ...prev,
+        show: false,
+      }));
+    }, 2500);
+  };
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,13 +44,12 @@ const Catalog = () => {
     loadProducts();
   }, []);
   const navigate = useNavigate();
-
   const handleAddToCart = async (product) => {
     try {
       await addToCart(product.id);
-      alert("Product added to cart.");
+      showToast("Product added to cart.");
     } catch (err) {
-      alert("Failed to add product.");
+      showToast("Failed to add product.", "error");
     }
   };
   return (
@@ -71,9 +89,9 @@ const Catalog = () => {
                     ₵{Number(product.price).toFixed(2)}
                   </p>
 
-                <button onClick={() => handleAddToCart(product)}>
-  Add to Cart
-</button>
+                  <button className="add-to-cart-btn" onClick={() => handleAddToCart(product)}>
+                    Add to Cart
+                  </button>
                 </div>
               </article>
             ))}
@@ -81,9 +99,22 @@ const Catalog = () => {
         )}
       </div>
 
-      <div className="more-bitton">
-        <button>View more</button>
-      </div>
+     <div className="more-bitton">
+                <button> 
+
+                      <Link to="/psd-store" className="">
+                  View More
+                </Link>
+                </button>
+
+              
+            </div>
+
+      {toast.show && (
+        <div className={`catalog-toast ${toast.type}`}>
+          {toast.message}
+        </div>
+      )}
     </section>
   );
 };

@@ -123,18 +123,19 @@ const Store = () => {
 
         <div className="store__heroContent">
           <p className="store__eyebrow">
-            Templates made for the moments that matter
+            Premium Editable PSD Templates
           </p>
 
           <h1 className="store__heroTitle">
-            Design help for churches, NGOs
+            Ready-to-Edit PSD Files
             <br />
-            and small businesses
+            For Every Industry
           </h1>
 
           <p className="store__heroSub">
-            Editable flyer templates built around how ministries, NGOs and
-            small teams actually communicate — ready in minutes, not days.
+            Professionally designed, fully editable PSD templates for businesses,
+            churches, events, NGOs, brands, and content creators. Customize in
+            minutes and bring your ideas to life.
           </p>
 
           <div className="store__heroActions">
@@ -143,18 +144,27 @@ const Store = () => {
               className="store__cta store__cta--primary"
               onClick={() => setActiveCategory("all")}
             >
-              Browse all templates
+              Browse Templates
             </button>
 
-            <button type="button" className="store__cta store__cta--ghost">
-              Request a custom design
+            <button
+              type="button"
+              className="store__cta store__cta--ghost"
+              onClick={() =>
+                window.open(
+                  "https://wa.me/233541254645?text=Hi%20Ben%20Kreations,%20I'd%20like%20to%20request%20a%20custom%20design.",
+                  "_blank"
+                )
+              }
+            >
+              Request a Custom Design
             </button>
           </div>
         </div>
       </section>
 
       <div className="store__toolbar">
-        <label className="store__search">
+        {/* <label className="store__search">
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -173,7 +183,7 @@ const Store = () => {
             placeholder="Search templates..."
             aria-label="Search templates"
           />
-        </label>
+        </label> */}
 
         <p className="store__count">
           {isLoading
@@ -189,6 +199,24 @@ const Store = () => {
           className="store__categories"
           aria-label="Filter templates by category"
         >
+          {/* Mobile dropdown */}
+          <select
+            className="store__categoriesDropdown"
+            value={activeCategory}
+            onChange={(e) => setActiveCategory(e.target.value)}
+            aria-label="Filter by category"
+          >
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.label}
+                {category.id !== "all" && category.products_count
+                  ? ` (${category.products_count})`
+                  : ""}
+              </option>
+            ))}
+          </select>
+
+          {/* Desktop list */}
           <ul>
             {categories.map((category) => (
               <li key={category.id}>
@@ -294,12 +322,13 @@ const Store = () => {
                       Add to cart
                     </button>
 
-                    <button
-                      type="button"
-                      className="store__cta store__cta--ghost store__cta--small"
-                    >
-                      View
-                    </button>
+                   <button
+  type="button"
+  className="store__cta store__cta--ghost store__cta--small"
+  onClick={() => navigate(`/detail/${product.id}`)}
+>
+  View
+</button>
                   </div>
                 </article>
               ))}

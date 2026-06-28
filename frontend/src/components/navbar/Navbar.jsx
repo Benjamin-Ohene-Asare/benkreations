@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   HiMenuAlt3,
   HiX,
-  HiMoon,
-  HiBookmark,
   HiShoppingCart,
   HiUser,
   HiLogout,
@@ -17,10 +16,11 @@ function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
 
-  const [authToken, setAuthToken] = useState(() =>
-    localStorage.getItem("access")
-  );
+  const avatarRef = useRef(null);
+  const mobileAvatarRef = useRef(null);
+  const dropdownRef = useRef(null);
 
+  const [authToken, setAuthToken] = useState(() => localStorage.getItem("access"));
   const [authUser, setAuthUser] = useState(() =>
     JSON.parse(localStorage.getItem("user"))
   );
@@ -35,14 +35,33 @@ function Navbar() {
     };
 
     window.addEventListener("authChange", syncAuth);
-
-    return () => {
-      window.removeEventListener("authChange", syncAuth);
-    };
+    return () => window.removeEventListener("authChange", syncAuth);
   }, []);
 
-  const token = authToken;
+  useEffect(() => {
+    setProfileOpen(false);
+    setMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handler = (e) => {
+      const clickedAvatar =
+        avatarRef.current?.contains(e.target) ||
+        mobileAvatarRef.current?.contains(e.target);
+
+      const clickedDropdown = dropdownRef.current?.contains(e.target);
+
+      if (!clickedAvatar && !clickedDropdown) {
+        setProfileOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
   const user = authUser;
+  const token = authToken;
   const isLoggedIn = token && user;
 
   const dashboardPath =
@@ -50,14 +69,19 @@ function Navbar() {
 
   const getInitials = () => {
     if (!user) return "";
-
     const first = user.first_name?.charAt(0) || "";
     const last = user.last_name?.charAt(0) || "";
 
     return (
-      `${first}${last}`.toUpperCase() ||
-      user.email?.charAt(0).toUpperCase()
+      (first + last).toUpperCase() ||
+      user.email?.charAt(0).toUpperCase() ||
+      "U"
     );
+  };
+
+  const closeAllMenus = () => {
+    setProfileOpen(false);
+    setMenuOpen(false);
   };
 
   const handleLogout = () => {
@@ -67,99 +91,155 @@ function Navbar() {
 
     window.dispatchEvent(new Event("authChange"));
 
-    setProfileOpen(false);
+    closeAllMenus();
     navigate("/login", { replace: true });
   };
 
+  const ProfileDropdown = () =>
+    createPortal(
+      <>
+        <div
+          className="profile-menu-backdrop"
+          onClick={() => setProfileOpen(false)}
+        />
+
+        <div className="profile-menu-portal" ref={dropdownRef}>
+          <Link
+            to={dashboardPath}
+            className="profile-menu-item"
+            onClick={closeAllMenus}
+          >
+            <HiViewGrid />
+            {user?.role === "admin" ? "Admin Dashboard" : "Dashboard"}
+          </Link>
+
+          <Link
+            to={dashboardPath}
+            className="profile-menu-item"
+            onClick={closeAllMenus}
+          >
+            <HiUser />
+            Profile
+          </Link>
+
+          <button
+            type="button"
+            className="profile-menu-item logout"
+            onClick={handleLogout}
+          >
+            <HiLogout />
+            Sign Out
+          </button>
+        </div>
+      </>,
+      document.body
+    );
+
   return (
     <nav className="navbar">
-      <Link to="/" className="logo-link">
+      <Link to="/" className="logo-link" onClick={closeAllMenus}>
         <div className="logo-wrap">
           <img src={logo} alt="Benkreations" className="logo-img" />
           <span className="logo-name">Benkreations</span>
         </div>
       </Link>
 
-      <div className="menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
+      <div
+        className="menu-icon"
+        onClick={() => {
+          setMenuOpen(!menuOpen);
+          setProfileOpen(false);
+        }}
+      >
         {menuOpen ? <HiX /> : <HiMenuAlt3 />}
       </div>
 
       <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
         <li>
-          <Link to="/" className={location.pathname === "/" ? "active" : ""}>
+          <Link
+            to="/"
+            className={location.pathname === "/" ? "active" : ""}
+            onClick={closeAllMenus}
+          >
             Home
           </Link>
         </li>
-        <li>
-          <Link
-            to="/about"
-            className={location.pathname === "/about" ? "active" : ""}
-          >
-            About
-          </Link>
-        </li>
+
         <li>
           <Link
             to="/services"
             className={location.pathname === "/services" ? "active" : ""}
+            onClick={closeAllMenus}
           >
             Services
           </Link>
         </li>
+
         <li>
           <Link
             to="/psd-store"
             className={location.pathname === "/psd-store" ? "active" : ""}
+            onClick={closeAllMenus}
           >
             PSD Store
           </Link>
         </li>
-        <li>
-          <Link
-            to="/blog"
-            className={location.pathname === "/blog" ? "active" : ""}
-          >
-            Blog
-          </Link>
-        </li>
+
         <li>
           <Link
             to="/contact"
             className={location.pathname === "/contact" ? "active" : ""}
+            onClick={closeAllMenus}
           >
             Contact
+          </Link>
+        </li>
+
+        <li className="mobile-nav-actions">
+          <button
+            type="button"
+            className="nav-icon"
+            onClick={() => {
+              closeAllMenus();
+              if (!isLoggedIn) return navigate("/login");
+              navigate("/cart");
+            }}
+          >
+            <HiShoppingCart />
+          </button>
+
+          {isLoggedIn ? (
+            <div ref={mobileAvatarRef}>
+              <button
+                type="button"
+                className="nav-avatar"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setProfileOpen((prev) => !prev);
+                }}
+              >
+                {getInitials()}
+              </button>
+            </div>
+          ) : (
+            <Link to="/login" className="nav-cta" onClick={closeAllMenus}>
+              Login
+            </Link>
+          )}
+
+          <Link to="/contact" className="nav-cta" onClick={closeAllMenus}>
+            Get In Touch
           </Link>
         </li>
       </ul>
 
       <div className="nav-right">
-        <button className="nav-icon" aria-label="Toggle theme">
-          <HiMoon />
-        </button>
-
         <button
+          type="button"
           className="nav-icon"
-          aria-label="Saved"
           onClick={() => {
-            if (!isLoggedIn) {
-              navigate("/login");
-              return;
-            }
-            navigate("/saved");
-          }}
-        >
-          <HiBookmark />
-        </button>
-
-        <button
-          className="nav-icon"
-          aria-label="Cart"
-          onClick={() => {
-            if (!isLoggedIn) {
-              navigate("/login");
-              return;
-            }
-
+            closeAllMenus();
+            if (!isLoggedIn) return navigate("/login");
             navigate("/cart");
           }}
         >
@@ -167,45 +247,17 @@ function Navbar() {
         </button>
 
         {isLoggedIn ? (
-          <div className="profile-wrap">
+          <div className="profile-wrap" ref={avatarRef}>
             <button
               type="button"
               className="nav-avatar"
-              onClick={() => setProfileOpen(!profileOpen)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setProfileOpen((prev) => !prev);
+              }}
             >
               {getInitials()}
             </button>
-
-            {profileOpen && (
-              <div className="profile-menu">
-                <Link
-                  to={dashboardPath}
-                  className="profile-menu-item"
-                  onClick={() => setProfileOpen(false)}
-                >
-                  <HiViewGrid />
-                  {user.role === "admin" ? "Admin Dashboard" : "Dashboard"}
-                </Link>
-
-                <Link
-                  to={dashboardPath}
-                  className="profile-menu-item"
-                  onClick={() => setProfileOpen(false)}
-                >
-                  <HiUser />
-                  Profile
-                </Link>
-
-                <button
-                  type="button"
-                  className="profile-menu-item logout"
-                  onClick={handleLogout}
-                >
-                  <HiLogout />
-                  Sign Out
-                </button>
-              </div>
-            )}
           </div>
         ) : (
           <Link to="/login" className="nav-cta">
@@ -217,6 +269,8 @@ function Navbar() {
           Get In Touch
         </Link>
       </div>
+
+      {profileOpen && isLoggedIn && <ProfileDropdown />}
     </nav>
   );
 }

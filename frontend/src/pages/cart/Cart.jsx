@@ -6,6 +6,7 @@ import {
 } from "../../services/cartApi";
 import { initializePayment } from "../../services/paymentApi";
 import "./cart.css";
+import Footer from "../../components/footer/Footer";
 export default function Cart() {
   const [items, setItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
@@ -38,14 +39,14 @@ export default function Cart() {
     setItems(res.data.items || []);
     setTotalAmount(Number(res.data.total_amount || 0));
   };
-const handleCheckout = async () => {
-  try {
-    const res = await initializePayment();
-    window.location.href = res.data.authorization_url;
-  } catch (err) {
-    alert("Could not start payment. Please try again.");
-  }
-};
+  const handleCheckout = async () => {
+    try {
+      const res = await initializePayment();
+      window.location.href = res.data.authorization_url;
+    } catch (err) {
+      alert("Could not start payment. Please try again.");
+    }
+  };
   if (loading) {
     return <p>Loading cart...</p>;
   }
@@ -138,15 +139,16 @@ const handleCheckout = async () => {
             <span>₵{totalAmount.toFixed(2)}</span>
           </div>
 
-         <button
-  className="checkout-btn"
-  disabled={items.length === 0}
-  onClick={handleCheckout}
->
-  Proceed to Checkout
-</button>
+          <button
+            className="checkout-btn"
+            disabled={items.length === 0}
+            onClick={handleCheckout}
+          >
+            Proceed to Checkout
+          </button>
         </aside>
       </div>
     </div>
+
   );
 }

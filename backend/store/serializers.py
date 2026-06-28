@@ -1,6 +1,6 @@
 import os
 from rest_framework import serializers
-from .models import Category, Product, ProductPreviewImage
+from .models import Category, Product, ProductPreviewImage, Cart, CartItem
 
 
 ALLOWED_IMAGE_EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp"]
@@ -14,7 +14,6 @@ MAX_ZIP_SIZE = 300 * 1024 * 1024
 
 def validate_file_extension(file, allowed_extensions, field_name):
     ext = os.path.splitext(file.name)[1].lower()
-
     if ext not in allowed_extensions:
         raise serializers.ValidationError(
             f"{field_name} must be one of: {', '.join(allowed_extensions)}"
@@ -36,22 +35,10 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = [
-            "id",
-            "name",
-            "label",
-            "slug",
-            "description",
-            "status",
-            "products_count",
-            "created_at",
+            "id", "name", "label", "slug", "description",
+            "status", "products_count", "created_at",
         ]
-        read_only_fields = [
-            "id",
-            "label",
-            "slug",
-            "products_count",
-            "created_at",
-        ]
+        read_only_fields = ["id", "label", "slug", "products_count", "created_at"]
 
     def get_products_count(self, obj):
         return obj.products.count()
@@ -65,16 +52,15 @@ class ProductPreviewImageSerializer(serializers.ModelSerializer):
         fields = ["id", "image", "created_at"]
 
     def get_image(self, obj):
-        request = self.context.get("request")
-        if obj.image and request:
-            return request.build_absolute_uri(obj.image.url)
         if obj.image:
             return obj.image.url
         return None
 
+
 class ProductSerializer(serializers.ModelSerializer):
-    preview_images = ProductPreviewImageSerializer(many=True, read_only=True)
     thumbnail = serializers.SerializerMethodField()
+    psd_file = serializers.SerializerMethodField()
+    zip_file = serializers.SerializerMethodField()
     preview_images = ProductPreviewImageSerializer(many=True, read_only=True)
 
     uploaded_preview_images = serializers.ListField(
@@ -119,21 +105,27 @@ class ProductSerializer(serializers.ModelSerializer):
             "updated_at",
         ]
 
-    def validate_price(self, value):
-        if value < 0:
-            raise serializers.ValidationError("Price cannot be negative.")
-
-        if value > 999999:
-            raise serializers.ValidationError("Price is too high.")
-
-        return value
     def get_thumbnail(self, obj):
-        request = self.context.get("request")
-        if obj.thumbnail and request:
-            return request.build_absolute_uri(obj.thumbnail.url)
         if obj.thumbnail:
             return obj.thumbnail.url
         return None
+
+    def get_psd_file(self, obj):
+        if obj.psd_file:
+            return obj.psd_file.url
+        return None
+
+    def get_zip_file(self, obj):
+        if obj.zip_file:
+            return obj.zip_file.url
+        return None
+
+    def validate_price(self, value):
+        if value < 0:
+            raise serializers.ValidationError("Price cannot be negative.")
+        if value > 999999:
+            raise serializers.ValidationError("Price is too high.")
+        return value
 
     def validate_thumbnail(self, file):
         validate_file_extension(file, ALLOWED_IMAGE_EXTENSIONS, "Thumbnail")
@@ -149,7 +141,6 @@ class ProductSerializer(serializers.ModelSerializer):
         if file:
             validate_file_extension(file, ALLOWED_ZIP_EXTENSIONS, "ZIP file")
             validate_file_size(file, MAX_ZIP_SIZE, "ZIP file")
-
         return file
 
     def validate_uploaded_preview_images(self, images):
@@ -175,14 +166,9 @@ class ProductSerializer(serializers.ModelSerializer):
         product = Product.objects.create(**validated_data)
 
         for image in preview_images:
-            ProductPreviewImage.objects.create(
-                product=product,
-                image=image
-            )
+            ProductPreviewImage.objects.create(product=product, image=image)
 
         return product
-    
-from .models import Cart, CartItem
 
 
 class CartItemSerializer(serializers.ModelSerializer):
@@ -208,12 +194,9 @@ class CartItemSerializer(serializers.ModelSerializer):
             "category_name",
             "added_at",
         ]
-    def get_thumbnail(self, obj):
-        request = self.context.get("request")
-        thumbnail = obj.product.thumbnail
 
-        if thumbnail and request:
-            return request.build_absolute_uri(thumbnail.url)
+    def get_thumbnail(self, obj):
+        thumbnail = obj.product.thumbnail
         if thumbnail:
             return thumbnail.url
         return None
@@ -228,5 +211,4 @@ class CartSerializer(serializers.ModelSerializer):
         fields = ["id", "items", "total_amount", "created_at", "updated_at"]
 
     def get_total_amount(self, obj):
-        return obj.total_amount()    
-    
+        return obj.total_amount()

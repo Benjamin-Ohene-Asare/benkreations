@@ -80,5 +80,5 @@ api.interceptors.response.use(
 export default api;
 
 export const getFeaturedProducts = () => {
-  return axios.get(`${API_BASE_URL}/api/store/products/?featured=true`);
+ return api.get("/store/products/?featured=true");
 };

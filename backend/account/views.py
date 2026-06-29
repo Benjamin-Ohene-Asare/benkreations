@@ -1,29 +1,22 @@
-from django.shortcuts import render
 import os
 import requests
+
 from django.conf import settings
-from django.contrib.auth import (
-    get_user_model,
-    update_session_auth_hash,
-)
+from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib.auth.tokens import default_token_generator
-from django.core.mail import send_mail
 from django.utils.encoding import force_bytes, force_str
-from django.utils.http import (
-    urlsafe_base64_encode,
-    urlsafe_base64_decode,
-)
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import (
-    RegisterSerializer,
-    LoginSerializer,
-    UserProfileSerializer,
-)
+from .serializers import RegisterSerializer, LoginSerializer, UserProfileSerializer
+
+
+User = get_user_model()
+
 
 class RegisterView(APIView):
     authentication_classes = []
@@ -37,11 +30,8 @@ class RegisterView(APIView):
 
         if serializer.is_valid():
             serializer.save()
-
             return Response(
-                {
-                    "message": "Account created successfully. Please verify your email before logging in."
-                },
+                {"message": "Account created successfully. Please verify your email before logging in."},
                 status=status.HTTP_201_CREATED
             )
 
@@ -62,6 +52,8 @@ class LoginView(APIView):
             return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -78,8 +70,9 @@ class UserProfileView(APIView):
                 }
             },
             status=status.HTTP_200_OK
-        ) 
-        
+        )
+
+
 class ChangePasswordView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -120,10 +113,7 @@ class ChangePasswordView(APIView):
         return Response(
             {"message": "Password changed successfully."},
             status=status.HTTP_200_OK
-        )        
-
-
-User = get_user_model()
+        )
 
 
 class ForgotPasswordView(APIView):
@@ -141,42 +131,26 @@ class ForgotPasswordView(APIView):
 
         user = User.objects.filter(email=email).first()
 
+        generic_response = {
+            "message": "If an account with that email exists, a password reset link has been sent."
+        }
+
         if not user:
-            return Response(
-                {
-                    "message": "If an account with that email exists, a password reset link has been sent."
-                },
-                status=status.HTTP_200_OK,
-            )
+            return Response(generic_response, status=status.HTTP_200_OK)
 
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         token = default_token_generator.make_token(user)
-
         reset_link = f"{settings.FRONTEND_URL}/reset-password/{uid}/{token}"
 
         brevo_api_key = os.getenv("BREVO_API_KEY")
 
-        response = requests.post(
-            "https://api.brevo.com/v3/smtp/email",
-            headers={
-                "accept": "application/json",
-                "api-key": brevo_api_key,
-                "content-type": "application/json",
-            },
-            json={
-                "sender": {
-                    "name": "Ben Kreations",
-                    "email": settings.DEFAULT_FROM_EMAIL,
-                },
-                "to": [
-                    {
-                        "email": user.email,
-                        "name": user.first_name or user.email,
-                    }
-                ],
-                "subject": "Reset Your Ben Kreations Password",
-                "textContent": f"""
-Hello {user.first_name or user.email},
+        if not brevo_api_key:
+            return Response(
+                {"message": "Brevo API key is not configured."},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+        email_body = f"""Hello {user.first_name or user.email},
 
 Click the link below to reset your password:
 
@@ -185,23 +159,53 @@ Click the link below to reset your password:
 If you did not request this, simply ignore this email.
 
 Ben Kreations
-""",
-            },
-            timeout=20,
-        )
+"""
 
-        if response.status_code >= 400:
+        try:
+            response = requests.post(
+                "https://api.brevo.com/v3/smtp/email",
+                headers={
+                    "accept": "application/json",
+                    "api-key": brevo_api_key,
+                    "content-type": "application/json",
+                },
+                json={
+                    "sender": {
+                        "name": "Ben Kreations",
+                        "email": settings.DEFAULT_FROM_EMAIL,
+                    },
+                    "to": [
+                        {
+                            "email": user.email,
+                            "name": user.first_name or user.email,
+                        }
+                    ],
+                    "subject": "Reset Your Ben Kreations Password",
+                    "textContent": email_body,
+                },
+                timeout=20,
+            )
+        except requests.RequestException as error:
             return Response(
-                {"message": "Unable to send reset email. Please try again later."},
+                {
+                    "message": "Unable to connect to Brevo email service.",
+                    "error": str(error),
+                },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
-        return Response(
-            {
-                "message": "If an account with that email exists, a password reset link has been sent."
-            },
-            status=status.HTTP_200_OK,
-        )
+        if response.status_code >= 400:
+            return Response(
+                {
+                    "message": "Brevo failed to send the email.",
+                    "brevo_response": response.text,
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+        return Response(generic_response, status=status.HTTP_200_OK)
+
+
 class ResetPasswordView(APIView):
     authentication_classes = []
     permission_classes = []

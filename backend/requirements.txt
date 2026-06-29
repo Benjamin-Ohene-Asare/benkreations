@@ -20,3 +20,4 @@ bleach==6.3.0
 sqlparse==0.5.3
 tzdata==2026.1
 whitenoise==6.9.0
+sib-api-v3-sdk

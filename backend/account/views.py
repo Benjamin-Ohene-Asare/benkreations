@@ -1,5 +1,6 @@
 from django.shortcuts import render
-
+import os
+import requests
 from django.conf import settings
 from django.contrib.auth import (
     get_user_model,
@@ -140,7 +141,6 @@ class ForgotPasswordView(APIView):
 
         user = User.objects.filter(email=email).first()
 
-        # Always return the same response for security
         if not user:
             return Response(
                 {
@@ -152,13 +152,30 @@ class ForgotPasswordView(APIView):
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         token = default_token_generator.make_token(user)
 
-        reset_link = (
-            f"{settings.FRONTEND_URL}/reset-password/{uid}/{token}"
-        )
+        reset_link = f"{settings.FRONTEND_URL}/reset-password/{uid}/{token}"
 
-        send_mail(
-            subject="Reset Your Ben Kreations Password",
-            message=f"""
+        brevo_api_key = os.getenv("BREVO_API_KEY")
+
+        response = requests.post(
+            "https://api.brevo.com/v3/smtp/email",
+            headers={
+                "accept": "application/json",
+                "api-key": brevo_api_key,
+                "content-type": "application/json",
+            },
+            json={
+                "sender": {
+                    "name": "Ben Kreations",
+                    "email": settings.DEFAULT_FROM_EMAIL,
+                },
+                "to": [
+                    {
+                        "email": user.email,
+                        "name": user.first_name or user.email,
+                    }
+                ],
+                "subject": "Reset Your Ben Kreations Password",
+                "textContent": f"""
 Hello {user.first_name or user.email},
 
 Click the link below to reset your password:
@@ -169,10 +186,15 @@ If you did not request this, simply ignore this email.
 
 Ben Kreations
 """,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[user.email],
-            fail_silently=False,
+            },
+            timeout=20,
         )
+
+        if response.status_code >= 400:
+            return Response(
+                {"message": "Unable to send reset email. Please try again later."},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
 
         return Response(
             {
@@ -180,7 +202,6 @@ Ben Kreations
             },
             status=status.HTTP_200_OK,
         )
-
 class ResetPasswordView(APIView):
     authentication_classes = []
     permission_classes = []

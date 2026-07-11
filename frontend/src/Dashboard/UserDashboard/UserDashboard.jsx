@@ -338,7 +338,7 @@ const handleChangePassword = async () => {
               <div className="panel-body">
                 {recentOrders.length === 0 ? (
                   <div className="empty-state">
-                    <p>No orders yet.</p>
+                    <p>No orders yets.</p>
                   </div>
                 ) : (
                   recentOrders.map((order) => (
